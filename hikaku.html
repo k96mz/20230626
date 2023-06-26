@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>サンプルタイトル</title>
+        <title>6-2.MapLibre GL JSで地図上に多くの図形を表示する</title>
         <!-- MapLibre GL JSを読み込み -->
-        <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-lg.js"></script>
-        <link 
-            rel="stylesheet"
+        <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+        <link
             href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
+            rel="stylesheet"
         />
     </head>
     <body>
@@ -35,12 +36,14 @@
                         polygon: {
                             type: 'geojson', // GeoJSON
                             data: './A16-15_00_DID.geojson',
-                            attribution: '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A16-v2_3.html">国土数値情報 - 人口集中地区データ</a>',
+                            attribution:
+                                '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A16-v2_3.html">国土数値情報 - 人口集中地区データ</a>',
                         },
                         line: {
                             type: 'geojson',
-                            data: './N02-22_RailroadSection.geojson',
-                            attribution:'<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-v3_0.html">国土数値情報 - 鉄道データ</a>',
+                            data: './N02-21_RailroadSection.geojson',
+                            attribution:
+                                '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-v3_0.html">国土数値情報 - 鉄道データ</a>',
                         },
                     },
                     layers: [
@@ -56,9 +59,24 @@
                             paint: {
                                 // Leafletの場合と同じような色表現とするための設定
                                 'fill-color': [
-                                    'rgba', 255, 0, 0,
-                                ['min', 1, ['/',['/',['get','人口'], ['get', '面積']],20000]],
-                                ]
+                                    'rgba',
+                                    255,
+                                    0,
+                                    0,
+                                    [
+                                        'min',
+                                        1,
+                                        [
+                                            '/',
+                                            [
+                                                '/',
+                                                ['get', '人口'],
+                                                ['get', '面積'],
+                                            ],
+                                            20000,
+                                        ],
+                                    ],
+                                ],
                             },
                         },
                         {
