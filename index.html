@@ -1,52 +1,98 @@
 <!DOCTYPE html>
-<html> 
+<html>
     <head>
-        <title>１．地図タイルを背景として表示する</title>
-        <!-- linkタグはこのページと他のファイルとがこのような関係であると伝えるもの。
-        relはrelationを示しファイルとの関係性を表す、
-        hrefはそのファイルがある場所を示す。
-        integrityは、外部リソースの整合性を確認するもの。CDNなどから取得した外部リソースに第三者によって意図しない改竄が加えられていないかを検証
-        crossoriginは、外部リソースを読み込むときのCORS（Cross Origin Resource Sharing)のこと。別のサーバにアクセスするためのもの。
-         -->
-        <link
-            rel="stylesheet" 
-            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-            crossorigin="" 
+        <title>サンプルタイトル</title>
+        <!-- MapLibre GL JSを読み込み -->
+        <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-lg.js"></script>
+        <link 
+            rel="stylesheet"
+            href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
         />
-        <!-- LeafletのJavaScript読み込み -->
-        <!-- JavaScriptを読み込むときに使う、またJavaScriptを書くときに使う -->
-        <script
-            src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-            crossorigin=""
-        ></script>
-        <!-- UNPKGとはnpmで公開されているパッケージを配信しているCDNサービス
-        npmとは、Node Package Managerのこと。Node.jsのパッケージを管理するツール。 -->
     </head>
     <body>
-        <!-- 地図を表示するdiv要素を宣言 -->
-        <!-- idとは、class属性みたいなものでとりあえずOK. -->
         <div id="map" style="height: 80vh"></div>
-        <h1>テスト</h1>
         <script>
-            // JavaScritpのコメントアウトは//。
-            // 地図インスタンスを初期化（=div要素に地図画面が埋め込まれる）
-            // L.mapが何を示すのかはよく分からない。きっとそういうもの。
-            const map = L.map('map', {
-                center: [36.5, 137.1], // 初期表示の地図中心の緯度経度
-                zoom: 5, // 初期ズームレベル
-            });
-            // 背景レイヤーインスタンスを初期化
-            const backgroundLayer = L.tileLayer(
-                'https://tile.openstreetmap.org/{z}/{x}/{y}.png', // OSMのURLテンプレート
-                {
-                    maxZoom: 19,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            // MapLibreインスタンスを初期化
+            const map = new maplibregl.Map({
+                container: 'map',
+                center: [137.1, 36.5]
+                zoom: 4,
+                style: {
+                    // MapLibre-Style
+                    version: 8,
+                    sources: {
+                        // 地図上で使うデータを定義する
+                        osm: {
+                            type: 'raster', // ラスタータイル
+                            tiles: [
+                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            ],
+                            tileSize: 256, // タイルの解像度, デフォルトは512
+                            maxzoom: 19,
+                            attribution:
+                                '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        },
+                        polygon: {
+                            type: 'geojson', // GeoJSON
+                            data: './A16-15_00_DID.geojson',
+                            attribution: '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A16-v2_3.html">国土数値情報 - 人口集中地区データ</a>',
+                        },
+                        line: {
+                            type: 'geojson',
+                            data: './N02-22_RailroadSection.geojson',
+                            attribution:'<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-v3_0.html">国土数値情報 - 鉄道データ</a>',
+                        },
+                    },
+                    layers: [
+                        {
+                            id: 'osm-layer',
+                            source: 'osm', // 使うデータをSourcesのkeyで指定する
+                            type: 'raster', // データをどのように表示するか指定する
+                        },
+                        {
+                            id: 'polygon-layer',
+                            source: 'polygon',
+                            type: 'fill',
+                            paint: {
+                                // Leafletの場合と同じような色表現とするための設定
+                                'fill-color': [
+                                    'rgba', 255, 0, 0,
+                                ['min', 1, ['/',['/',['get','人口'], ['get', '面積']],20000]],
+                                ]
+                            },
+                        },
+                        {
+                            id: 'line-layer',
+                            source: 'line',
+                            type: 'line',
+                            paint: {
+                                // Leafletの場合と同じような色表現とするための設定
+                                'line-color': [
+                                    'case',
+                                    ['==', ['get', 'N02_002'], '1'], 'green',
+                                    ['==', ['get', 'N02_002'], '2'], '#00f', // blue
+                                    ['==', ['get', 'N02_002'], '3'], '#ff0000', // red
+                                    ['==', ['get', 'N02_002'], '4'], '#ffaa00', // orange
+                                    ['==', ['get', 'N02_002'], '5'], '#aa00ff', // purple
+                                    '#000000',
+                                ],
+                                'line-width': [
+                                    'case',
+                                    ['==', ['get', 'N02_002'], '1'], 10,
+                                    ['==', ['get', 'N02_002'], '2'], 7,
+                                    ['==', ['get', 'N02_002'], '3'], 4,
+                                    ['==', ['get', 'N02_002'], '4'], 4,
+                                    ['==', ['get', 'N02_002'], '5'], 4,
+                                    0,
+                                ],
+                            },
+                            layout: {
+                                'line-cap': 'round',
+                            },
+                        },
+                    ],
                 },
-            );
-            // 　地図インスタンスへレイヤーを追加
-            map.addLayer(backgroundLayer);
+            });
         </script>
     </body>
 </html>
