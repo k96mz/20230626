@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>１．地図タイルを背景として表示する</title>
+        <!-- linkタグはこのページと他のファイルとがこのような関係であると伝えるもの。
+        relはrelationを示しファイルとの関係性を表す、
+        hrefはそのファイルがある場所を示す。
+        integrityは、外部リソースの整合性を確認するもの。CDNなどから取得した外部リソースに第三者によって意図しない改竄が加えられていないかを検証
+        crossoriginは、外部リソースを読み込むときのCORS（Cross Origin Resource Sharing)のこと。別のサーバにアクセスするためのもの。
+         -->
+        <link
+            rel="stylesheet" 
+            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+            crossorigin="" 
+        />
+        <!-- LeafletのJavaScript読み込み -->
+        <!-- JavaScriptを読み込むときに使う、またJavaScriptを書くときに使う -->
+        <script
+            src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""
+        ></script>
+        <!-- UNPKGとはnpmで公開されているパッケージを配信しているCDNサービス
+        npmとは、Node Package Managerのこと。Node.jsのパッケージを管理するツール。 -->
+    </head>
+    <body>
+        <!-- 地図を表示するdiv要素を宣言 -->
+        <!-- idとは、class属性みたいなものでとりあえずOK. -->
+        <div id="map" style="height: 80vh"></div>
+        <h1>テスト</h1>
+        <script>
+            // JavaScritpのコメントアウトは//。
+            // 地図インスタンスを初期化（=div要素に地図画面が埋め込まれる）
+            // L.mapが何を示すのかはよく分からない。きっとそういうもの。
+            const map = L.map('map', {
+                center: [36.5, 137.1], // 初期表示の地図中心の緯度経度
+                zoom: 5, // 初期ズームレベル
+            });
+            // 背景レイヤーインスタンスを初期化
+            const backgroundLayer = L.tileLayer(
+                'https://tile.openstreetmap.org/{z}/{x}/{y}.png', // OSMのURLテンプレート
+                {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                },
+            );
+            // 　地図インスタンスへレイヤーを追加
+            map.addLayer(backgroundLayer);
+        </script>
+    </body>
+</html>
