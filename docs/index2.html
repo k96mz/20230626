@@ -17,7 +17,7 @@
             // console.log(`${path}これがURLです。`);
             // 「location.href」が元のURLを示し、そのURLからindex2.htmlを削除したものを[path]に格納している。
             // ベクトルタイルが、このファイルからの相対パスで`./tiles`ディレクトリに保存されているとする
-            const vectortileUrl = `${path}/tiles/{z}/{x}/{y}.pbf`;
+            const vectortileUrl = `${path}/admintiles/{z}/{x}/{y}.pbf`;
 
             // MapLibreインスタンスを初期化
             const map = new maplibregl.Map({
@@ -41,7 +41,7 @@
                         },
                         admin: {
                             type: 'vector', // ベクトルタイル
-                            tiles: [vectortileUrl], // 定数は大かっこで囲えばよいのか？
+                            tiles: [vectortileUrl], // 定数は大かっこで囲えばよいのか？→そのようだ。
                             maxzoom: 8,
                             attribution:
                                 '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v3_1.html">国土数値情報 - 行政区域データ</a>',
