@@ -117,6 +117,17 @@
                             paint: {
                                 'heatmap-weight' : 0.01, // ポイントひとつあたりの重み
                                 'heatmap-opacity': 0.7,
+                                'heatmap-color': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['heatmap-density'],
+                                    0, // 重み0のときは
+                                    'rgba(0, 0, 0, 0)', // 透明
+                                    0.5, // 重み0.5のときは
+                                    'rgba(255, 200, 0, 1)', // オレンジ色に
+                                    1.0, // 重み1.0のときは
+                                    'rgba(255, 240, 200, 1)', // 白に近いオレンジ色に
+                                ],
                             },
                         },
                     ],
