@@ -27,6 +27,7 @@
                 style: {
                     // MapLibre-Style
                     version: 8,
+                    glyphs: './fonts/{fontstack}/{range}.pbf', // フォントデータを指定
                     sources: {
                         // 地図上で使うデータを定義する
                         osm: {
@@ -155,6 +156,27 @@
                                     0.1, // 透過度10%
                                     14, // ズームレベル14のときに
                                     1, // 透過度100%
+                                ],
+                            },
+                        },
+                        {
+                            id: 'medical-label-layer', // 医療機関名を表示するレイヤー
+                            source: 'medical',
+                            type: 'symbol', // フォントはsymbolとして表示する
+                            minzoom: 12,
+                            layout: {
+                                'text-field': ['get', 'P04_002'], // P04_002 施設名称
+                                'text-font': ['Noto Sans CJK JP Bold'], // glyphsのフォントデータに含まれるフォントを指定
+                                'text-offset': [0, 0.5], // フォントの位置調整
+                                'text-anchor': 'top', // フォントの位置調整
+                                'text-size': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['zoom'],
+                                    10, // ズームレベル10のときに
+                                    8, // フォントサイズ8
+                                    14, // ズームレベル14のときに
+                                    14, // フォントサイズ14
                                 ],
                             },
                         },
