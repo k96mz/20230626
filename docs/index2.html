@@ -109,6 +109,16 @@
                                 'line-width': 4,
                             },
                         },
+                        {
+                            id: 'medical-heatmap-layer', // 低ズームレベルでは、学校の位置情報をヒートマップとして表示
+                            source: 'medical',
+                            type: 'heatmap',
+                            maxzoom: 12, // ズームレベル12までしか表示しない
+                            paint: {
+                                'heatmap-weight' : 0.01, // ポイントひとつあたりの重み
+                                'heatmap-opacity': 0.7,
+                            },
+                        },
                     ],
                 },
             });
