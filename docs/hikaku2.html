@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>7.MapLibre GL JSで地図上にさらに多くの図形を表示する</title>
-        <!-- MapLibre GL JSを読み込み -->
         <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
-        <link 
+        <link
             href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
             rel="stylesheet"
         />
@@ -13,22 +13,19 @@
         <div id="map" style="height: 80vh"></div>
         <script>
             // タイルのURLはhttpから始まるフルパスである必要があるため、http~~/index.htmlのhttp://~~までを取得する
-            const path = location.href.replace('/index.html', ''); //何を示しているのか不明、調べる！！
-            // ベクトルタイルが、このファイルからの相対パスで`./tiles`ディレクトリに保存されているとする
+            const path = location.href.replace('/index.html', '');
+            // ベクトルタイルが、このファイルからの相対パスで`./tiles`ディレクトリに保存されているとします
             const vectortileUrl = `${path}/tiles/{z}/{x}/{y}.pbf`;
 
-            // MapLibreインスタンスを初期化
             const map = new maplibregl.Map({
                 container: 'map',
                 center: [137.1, 36.5],
                 zoom: 4,
                 style: {
-                    // MapLibre-Style
                     version: 8,
                     sources: {
-                        // 地図上で使うデータを定義する
                         osm: {
-                            type: 'raster', // ラスタータイル
+                            type: 'raster',
                             tiles: [
                                 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                             ],
@@ -39,7 +36,7 @@
                         },
                         admin: {
                             type: 'vector', // ベクトルタイル
-                            tiles: [vectortileUrl], // 定数は大かっこで囲えばよいのか？
+                            tiles: [vectortileUrl],
                             maxzoom: 8,
                             attribution:
                                 '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v3_1.html">国土数値情報 - 行政区域データ</a>',
@@ -48,23 +45,36 @@
                     layers: [
                         {
                             id: 'osm-layer',
-                            source: 'osm', // 使うデータをsourcesのkeyで指定する
-                            type: 'raster', // データをどのように表示するか指定する
+                            source: 'osm',
+                            type: 'raster',
                         },
                         {
                             id: 'admin-layer',
-                            source: 'admin', // sourcesで定義したうち、このlayerで用いるデータのkeyを指定する
+                            source: 'admin',
                             'source-layer': 'admin', // ベクトルタイル内のレイヤー名を指定する
-                            type: 'fill', // データをどのように描画するか指定する：ここではポリゴン(fill）として描画する
+                            type: 'fill',
                             paint: {
-                                // Leafletの場合と同じような色表現とするための設定
-                                'fill-color': '#fa0', // ポリゴンの色
-                                'fill-opacity': 0.5, // ポリゴンの透過度
-                                'fill-outline-color': '#00f', // ポリゴンの外周線の色
+                                'fill-color': '#fa0',
+                                'fill-opacity': 0.5,
+                                'fill-outline-color': '#00f',
                             },
                         },
                     ],
                 },
+            });
+
+            // クリック地点の地物の情報を取得する処理
+            map.on('click', (e) => {
+                // "admin-layer"から、クリック地点にある地物全てを取得する
+                const features = map.queryRenderedFeatures(e.point, {
+                    layers: ['admin-layer'],
+                });
+                if (features.length === 0) return; // クリック地点に地物が存在しない場合は処理を終了
+
+                const feature = features[0];
+                alert(
+                    `${feature.properties.N03_007}: ${feature.properties.N03_001}${feature.properties.N03_004}`,
+                ); // 市町村コード: 都道府県名市町村名
             });
         </script>
     </body>
