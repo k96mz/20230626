@@ -66,14 +66,14 @@
                             id: 'osm-layer',
                             source: 'osm', // 使うデータをsourcesのkeyで指定する
                             type: 'raster', // データをどのように表示するか指定する
-                            minzoom: 10,
+                            minzoom: 7,
                             paint: {
                                 'raster-opacity': [
                                     // ズームレベルに応じた透過度調整
                                     'interpolate', // 補間処理
                                     ['linear'], // 線形で補間
                                     ['zoom'], // ズームレベル間の補間
-                                    10, // ズームレベル10のときに
+                                    7, // ズームレベル10のときに
                                     0, // 透過度0%（透明）
                                     14, // ズームレベル14のときに
                                     0.7, // 透過度70%
