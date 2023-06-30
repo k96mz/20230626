@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>医療期間を表示する</title>
+        <!-- MapLibre GL JSを読み込み -->
+        <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+        <link 
+            href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
+            rel="stylesheet"
+        />
+        <!-- <script>
+            import OpacityControl from 'maplibre-gl-opacity';
+            import 'maplibre-gl-opacity/dist/maplibre-gl-opacity.css';
+        </script> -->
+    </head>
+    <body>
+        <div id="map" style="height: 80vh"></div>
+        <script>
+            // タイルのURLはhttpから始まるフルパスである必要があるため、http~~/index.htmlのhttp://~~までを取得する
+            const path = location.href.replace('/index3.html', ''); // location.hrefでURLの取得ができる。
+            // console.log(`${path}これがURLです。`);
+            // 「location.href」が元のURLを示し、そのURLからindex2.htmlを削除したものを[path]に格納している。
+            // MapLibreインスタンスを初期化
+            const map = new maplibregl.Map({
+                container: 'map',
+                center: [138, 37], // 初期表示の中心
+                minZoom: 5, // 最小ズーム
+                maxZoom: 18, // 最大ズーム
+                maxBounds: [122, 20, 154, 50], // 表示可能な範囲
+                style: {
+                    // MapLibre-Style
+                    version: 8,
+                    glyphs: './fonts/{fontstack}/{range}.pbf', // フォントデータを指定
+                    sources: {
+                        // 地図上で使うデータを定義する
+                        osm: {
+                            type: 'raster', // ラスタータイル
+                            tiles: [
+                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            ],
+                            maxzoom: 19,
+                            tileSize: 256,
+                            attribution:
+                                '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        },
+                        skhb: {
+                        // 医療機関ベクトルタイル
+                            type: 'vector',
+                            tiles: [
+                                `${path}/location-app2/public/skhb/{z}/{x}/{y}.pbf`
+                            ],
+                            minzoom: 4,
+                            maxzoom: 10,
+                            attribution: 
+                            '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P04-v3_0.html" target="_blank">国土数値情報 医療機関データ</a>',
+                        },
+                    },
+                    layers: [
+                        {
+                            id: 'osm-layer',
+                            source: 'osm', // 使うデータをsourcesのkeyで指定する
+                            type: 'raster', // データをどのように表示するか指定する
+                        },
+                         {
+                            id: 'skhb-layer',
+                            source: 'skhb',
+                            'source-layer': 'skhb',
+                            type: 'circle',
+                            paint: {
+                            // 'circle-color': '#6666cc',
+                            'circle-color': [
+                                // アイコンの色を属性値によって塗り分ける
+                                'interpolate',
+                                ['linear'],
+                                ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
+                                1, '#f00', // 病院は赤　病院だけ表示とかしてみてもよい。
+                                2, '#0f0', // 診療所は緑
+                                3, '#00f', // 歯科診療所は青
+                            ],
+                            'circle-radius': [ // ズームレベルに応じた円の大きさ
+                                'interpolate',
+                                ['linear'],
+                                ['zoom'],
+                                5,
+                                2,
+                                14,
+                                6,
+                            ], 
+                            'circle-stroke-width': 1,
+                            'circle-stroke-color': '#ffffff',
+                            },
+                            //filter: ['get', 'P04_001'],
+                        },
+                        {
+                            id: 'medical-label-layer', // 医療機関名を表示するレイヤー
+                            source: 'medical',
+                            type: 'symbol', // フォントはsymbolとして表示する
+                            minzoom: 12,
+                            layout: {
+                                'text-field': ['get', 'P04_002'], // P04_002 施設名称
+                                'text-font': ['Noto Sans CJK JP Bold'], // glyphsのフォントデータに含まれるフォントを指定
+                                'text-offset': [0, 0.5], // フォントの位置調整
+                                'text-anchor': 'top', // フォントの位置調整
+                                'text-size': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['zoom'],
+                                    10, // ズームレベル10のときに
+                                    8, // フォントサイズ8
+                                    14, // ズームレベル14のときに
+                                    14, // フォントサイズ14
+                                ],
+                            },
+                            paint: {
+                                'text-halo-width': 1,
+                                'text-halo-color': '#fff',
+                            },
+                        },
+                    ],
+                },
+            });
+            // // マップの初期ロード完了時に発火するイベントを定義
+            // map.on('load', () => {
+            //     // 医療機関のコントロール
+            //     const opacity = new OpacityControl({
+            //         baseLayers: {
+            //             'hospital-layer': '病院',
+            //             'clinic-layer': '診療所',
+            //             'dentist-layer': '歯科医',
+            //         },
+            //     });
+            //     map.addControl(opacity, 'top-left'); // 第二引数で場所を指定できる: bottom-rightなど
+            // });
+        </script>
+    </body>
+</html>
