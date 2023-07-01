@@ -87,21 +87,6 @@
                                 // 3, '#00f', // 歯科診療所は青
                                 3, 'rgba(0,0,255,0.1)',
                             ],
-                            //'circle-opacity': [
-                                //'interpolate',
-                                // ['linear'],
-                                // ['zoom'],
-                                // 8, // ズームレベル8のときに
-                                // 0, // 透過度0%
-                                // 9, // ズームレベル9のときに
-                                // 0.1, // 透過度10%
-                                // 14, // ズームレベル14のときに
-                                // 1, // 透過度100%
-
-                                // 0.1,
-                                // ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
-                                // 1, '0.1', // 透過度10%
-                            // ],
                             'circle-radius': [ // ズームレベルに応じた円の大きさ
                                 'interpolate',
                                 ['linear'],
@@ -114,7 +99,6 @@
                             'circle-stroke-width': 1,
                             'circle-stroke-color': '#ffffff',
                             },
-                            //filter: ['get', 'P04_001'],
                         },
                         // {
                         //     id: 'medical-label-layer', // 医療機関名を表示するレイヤー
@@ -141,25 +125,25 @@
                             //     'text-halo-color': '#fff',
                             // },
                         // },
-                        {
-                            id: 'school-circle-layer',
-                            source: 'school',
-                            type: 'circle',
-                            minzoom: 8,
-                            paint: {
-                                'circle-color': [
-                                    'interpolate',
-                                    ['linear'],
-                                    ['get', 'P29_003'],
-                                    16001, '#f00', // 小学校は赤
-                                    // 16002, '#0f0', // 中学校は緑
-                                    16002, 'rgba(0,255,0,0.5)',
-                                    // 16004, '#00f', // 高校は青
-                                    16004, 'rgba(0,0,255,0.5)',
-                                    16007, 'black', // 大学は黒
-                                ],
-                            },
-                        },
+                        // {
+                        //     id: 'school-circle-layer',
+                        //     source: 'school',
+                        //     type: 'circle',
+                        //     minzoom: 8,
+                        //     paint: {
+                        //         'circle-color': [
+                        //             'interpolate',
+                        //             ['linear'],
+                        //             ['get', 'P29_003'],
+                        //             16001, '#f00', // 小学校は赤
+                        //             // 16002, '#0f0', // 中学校は緑
+                        //             16002, 'rgba(0,255,0,0.5)',
+                        //             // 16004, '#00f', // 高校は青
+                        //             16004, 'rgba(0,0,255,0.5)',
+                        //             16007, 'black', // 大学は黒
+                        //         ],
+                        //     },
+                        // },
                     ],
                 },
             });
