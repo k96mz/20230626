@@ -55,6 +55,12 @@
                             attribution: 
                             '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P04-v3_0.html" target="_blank">国土数値情報 医療機関データ</a>',
                         },
+                        school: {
+                            type: 'geojson',
+                            data: './P29-21.geojson',
+                            attribution:
+                            '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P29-v2_0.html" target="_blank">国土数値情報 学校データ</a>',
+                        },
                     },
                     layers: [
                         {
@@ -134,6 +140,22 @@
                             //     'text-halo-color': '#fff',
                             // },
                         // },
+                        {
+                            id: 'school-circle-layer',
+                            source: 'school',
+                            type: 'circle',
+                            minzoom: 8,
+                            paint: {
+                                'circle-color': [
+                                    'interpolate',
+                                    ['linear'],
+                                    ['get', 'P29_003'],
+                                    16001, '#f00', // 小学校は赤
+                                    16002, '#0f0', // 中学校は緑
+                                    16004, '#00f', // 高校は青
+                                ],
+                            },
+                        },
                     ],
                 },
             });
