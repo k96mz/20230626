@@ -74,11 +74,15 @@
                                 'interpolate',
                                 ['linear'],
                                 ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
-                                // 1, '#f00', // 病院は赤　病院だけ表示とかしてみてもよい。
+                                1, '#f00', // 病院は赤　病院だけ表示とかしてみてもよい。
                                 //1, '#FF0000', // カラーコードは6桁でもできる。https://itsakura.com/html-color-codes
-                                1, '#FF00001A', // 透過度は下2桁でできる https://toriton.link/coding/opacity_colorcode/
+                                //1, '#FF00001A', // 透過度は下2桁でできるらしいが、これはうまくいかない https://toriton.link/coding/opacity_colorcode/
                                 2, '#0f0', // 診療所は緑
                                 3, '#00f', // 歯科診療所は青
+                            ],
+                            'circle-opacity': [
+                                ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
+                                1, '0.1', // 透過度10%
                             ],
                             'circle-radius': [ // ズームレベルに応じた円の大きさ
                                 'interpolate',
