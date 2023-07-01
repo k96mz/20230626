@@ -69,7 +69,7 @@
                             type: 'raster', // データをどのように表示するか指定する
                         },
                         {
-                            id: 'skhb-layer',
+                            id: 'skhb-layer-red',
                             source: 'skhb',
                             'source-layer': 'skhb',
                             type: 'circle',
@@ -80,12 +80,70 @@
                                 'interpolate',
                                 ['linear'],
                                 ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
-                                1, '#f00', // 病院は赤　病院だけ表示とかしてみてもよい。
+                                1, 'rgba(255,0,0,1)', // 病院は赤　病院だけ表示とかしてみてもよい。
                                 //1, '#FF0000', // カラーコードは6桁でもできる。https://itsakura.com/html-color-codes
                                 //1, '#FF00001A', // 透過度は下2桁でできるらしいが、これはうまくいかない https://toriton.link/coding/opacity_colorcode/
-                                2, '#0f0', // 診療所は緑
+                                2, 'rgba(0,255,0,0)', // 診療所は緑
                                 // 3, '#00f', // 歯科診療所は青
-                                3, 'rgba(0,0,255,0.1)',
+                                3, 'rgba(0,0,255,0)', // 歯科診療所は青
+                            ],
+                            'circle-radius': [ // ズームレベルに応じた円の大きさ
+                                'interpolate',
+                                ['linear'],
+                                ['zoom'],
+                                5,
+                                2,
+                                14,
+                                6,
+                            ], 
+                            'circle-stroke-width': 1,
+                            'circle-stroke-color': '#ffffff',
+                            },
+                        },
+                        {
+                            id: 'skhb-layer-green',
+                            source: 'skhb',
+                            'source-layer': 'skhb',
+                            type: 'circle',
+                            paint: {
+                            // 'circle-color': '#6666cc',
+                            'circle-color': [
+                                // アイコンの色を属性値によって塗り分ける
+                                'interpolate',
+                                ['linear'],
+                                ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
+                                1, 'rgba(255,0,0,0)', // 病院は赤
+                                2, 'rgba(0,255,0,0)', // 診療所は緑
+                                3, 'rgba(0,0,255,0)', // 歯科診療所は青
+                            ],
+                            'circle-radius': [ // ズームレベルに応じた円の大きさ
+                                'interpolate',
+                                ['linear'],
+                                ['zoom'],
+                                5,
+                                2,
+                                14,
+                                6,
+                            ], 
+                            'circle-stroke-width': 1,
+                            'circle-stroke-color': '#ffffff',
+                            },
+                        },
+                        {
+                            id: 'skhb-layer-blue',
+                            source: 'skhb',
+                            'source-layer': 'skhb',
+                            type: 'circle',
+                            paint: {
+                            // 'circle-color': '#6666cc',
+                            'circle-color': [
+                                // アイコンの色を属性値によって塗り分ける
+                                'interpolate',
+                                ['linear'],
+                                ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
+                                1, 'rgba(255,0,0,0)', // 病院は赤
+                                2, 'rgba(0,255,0,0)', // 診療所は緑
+                                3, 'rgba(0,0,255,0)', // 歯科診療所は青
                             ],
                             'circle-radius': [ // ズームレベルに応じた円の大きさ
                                 'interpolate',
