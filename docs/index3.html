@@ -62,36 +62,36 @@
                             source: 'osm', // 使うデータをsourcesのkeyで指定する
                             type: 'raster', // データをどのように表示するか指定する
                         },
-                        // {
-                        //     id: 'skhb-layer',
-                        //     source: 'skhb',
-                        //     'source-layer': 'skhb',
-                        //     type: 'circle',
-                        //     paint: {
-                        //     // 'circle-color': '#6666cc',
-                        //     'circle-color': [
-                        //         // アイコンの色を属性値によって塗り分ける
-                        //         'interpolate',
-                        //         ['linear'],
-                        //         ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
-                        //         1, '#f00', // 病院は赤　病院だけ表示とかしてみてもよい。
-                        //         2, '#0f0', // 診療所は緑
-                        //         3, '#00f', // 歯科診療所は青
-                        //     ],
-                        //     'circle-radius': [ // ズームレベルに応じた円の大きさ
-                        //         'interpolate',
-                        //         ['linear'],
-                        //         ['zoom'],
-                        //         5,
-                        //         2,
-                        //         14,
-                        //         6,
-                        //     ], 
-                        //     'circle-stroke-width': 1,
-                        //     'circle-stroke-color': '#ffffff',
-                        //     },
-                        //     //filter: ['get', 'P04_001'],
-                        // },
+                        {
+                            id: 'skhb-layer',
+                            source: 'skhb',
+                            'source-layer': 'skhb',
+                            type: 'circle',
+                            paint: {
+                            // 'circle-color': '#6666cc',
+                            'circle-color': [
+                                // アイコンの色を属性値によって塗り分ける
+                                'interpolate',
+                                ['linear'],
+                                ['get', 'P04_001'], // P04_001は医療機関分類コードを示す
+                                1, '#f00', // 病院は赤　病院だけ表示とかしてみてもよい。
+                                2, '#0f0', // 診療所は緑
+                                3, '#00f', // 歯科診療所は青
+                            ],
+                            'circle-radius': [ // ズームレベルに応じた円の大きさ
+                                'interpolate',
+                                ['linear'],
+                                ['zoom'],
+                                5,
+                                2,
+                                14,
+                                6,
+                            ], 
+                            'circle-stroke-width': 1,
+                            'circle-stroke-color': '#ffffff',
+                            },
+                            //filter: ['get', 'P04_001'],
+                        },
                         // {
                         //     id: 'medical-label-layer', // 医療機関名を表示するレイヤー
                         //     source: 'medical',
