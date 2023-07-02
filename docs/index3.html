@@ -229,9 +229,11 @@
                 // 医療機関のコントロール
                 const opacity = new OpacityControl({
                     baseLayers: {
-                        'skhb-layer-hospital': '病院：赤',
-                        'skhb-layer-clinic': '診療所：緑',
-                        'skhb-layer-dentist': '歯科医：青',
+                        'osm-layer': 'オープンストリートマップ',
+                        'gsi-layer': '地理院地図',
+                        // 'skhb-layer-hospital': '病院：赤',
+                        // 'skhb-layer-clinic': '診療所：緑',
+                        // 'skhb-layer-dentist': '歯科医：青',
                     },
                 });
                 map.addControl(opacity, 'top-left'); // 第二引数で場所を指定できる: bottom-rightなど
