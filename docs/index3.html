@@ -48,6 +48,16 @@
                             attribution:
                                 '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                         },
+                        gsi: {
+                            type: 'raster', // ラスタータイル
+                            tiles: [
+                                'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
+                            ],
+                            maxzoom: 18,
+                            tileSize: 256,
+                            attribution:
+                                '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>',
+                        },
                         skhb: {
                         // 医療機関ベクトルタイル
                             type: 'vector',
@@ -70,6 +80,11 @@
                         {
                             id: 'osm-layer',
                             source: 'osm', // 使うデータをsourcesのkeyで指定する
+                            type: 'raster', // データをどのように表示するか指定する
+                        },
+                        {
+                            id: 'gsi-layer',
+                            source: 'gsi', // 使うデータをsourcesのkeyで指定する
                             type: 'raster', // データをどのように表示するか指定する
                         },
                         {
