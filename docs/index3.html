@@ -74,7 +74,7 @@
                             type: 'raster', // データをどのように表示するか指定する
                         },
                         {
-                            id: 'skhb-layer-red',
+                            id: 'skhb-layer-hospital',
                             source: 'skhb',
                             'source-layer': 'skhb',
                             type: 'circle',
@@ -106,7 +106,7 @@
                             },
                         },
                         {
-                            id: 'skhb-layer-green',
+                            id: 'skhb-layer-clinic',
                             source: 'skhb',
                             'source-layer': 'skhb',
                             type: 'circle',
@@ -135,7 +135,7 @@
                             },
                         },
                         {
-                            id: 'skhb-layer-blue',
+                            id: 'skhb-layer-dentist',
                             source: 'skhb',
                             'source-layer': 'skhb',
                             type: 'circle',
@@ -210,18 +210,18 @@
                     ],
                 },
             });
-            // // マップの初期ロード完了時に発火するイベントを定義
-            // map.on('load', () => {
-            //     // 医療機関のコントロール
-            //     const opacity = new OpacityControl({
-            //         baseLayers: {
-            //             'hospital-layer': '病院',
-            //             'clinic-layer': '診療所',
-            //             'dentist-layer': '歯科医',
-            //         },
-            //     });
-            //     map.addControl(opacity, 'top-left'); // 第二引数で場所を指定できる: bottom-rightなど
-            // });
+            // マップの初期ロード完了時に発火するイベントを定義
+            map.on('load', () => {
+                // 医療機関のコントロール
+                const opacity = new OpacityControl({
+                    baseLayers: {
+                        'skhb-layer-hospital': '病院：赤',
+                        'skhb-layer-clinic': '診療所：緑',
+                        'skhb-layer-dentist': '歯科医：青',
+                    },
+                });
+                map.addControl(opacity, 'top-left'); // 第二引数で場所を指定できる: bottom-rightなど
+            });
         </script>
     </body>
 </html>
